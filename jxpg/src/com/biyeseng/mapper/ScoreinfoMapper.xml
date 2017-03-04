@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biyeseng.mapper.ScoreinfoMapper">
+<!-- 根据课程id 查询记录 -->
+<select id="findId" parameterType="int" resultType="com.biyeseng.pojo.Scoreinfo">
+ select * from scoreinfo where courseid= ${_parameter}
+</select>
+<!-- 查找所有记录 -->
+<select id="findAll" parameterType="int" resultType="com.biyeseng.pojo.Scoreinfo">
+ select * from scoreinfo
+</select>
+<!-- 根据课程id 查询评论的平均分 -->
+<select id="findAvg" parameterType="int" resultType="com.biyeseng.pojo.Scoreinfo">
+ select AVG(score) from scoreinfo where courseid=${_parameter}
+</select>
+<!-- 根据课程id 查询评论的人数 -->
+<select id="findCount" parameterType="int" resultType="com.biyeseng.pojo.Scoreinfo">
+ select count(*) from scoreinfo where courseid=${_parameter}
+</select>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biyeseng.mapper.ClassinfoMapper">
+
+	
+	
+	<select id="findClassinfoList" 
+		resultType="Classinfo">
+		select * from classinfo 
+	</select>
+	
+	<select id="findClassinfoByid" parameterType="int"
+		resultType="Classinfo">
+		select * from classinfo where id=${value}
+	</select>
+	
+	
+	<insert id="insertClassinfo" useGeneratedKeys="true" keyProperty="id" parameterType="Classinfo">
+		insert into classinfo
+		(classno,classname,major,college)
+		values
+		(#{classno},#{classname},#{major},#{college});
+	</insert>
+	
+	<update id="updateClassinfo" parameterType="Classinfo" >
+		update classinfo set
+		classno=#{classno},classname=#{classname},major=#{major},college=#{college}
+		where
+		id=#{id}	
+	</update>
+	
+	<delete id="deleteClassinfo" parameterType="int">
+	    delete from  classinfo where id=${value}
+	</delete>
+
+</mapper>

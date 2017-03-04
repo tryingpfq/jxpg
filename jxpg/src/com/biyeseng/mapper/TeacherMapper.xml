@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biyeseng.mapper.TeacherMapper">
+	<select id="findTeacherList" resultType="Teacher">
+		select * from teacher
+	</select>
+
+	<insert id="insertTeacher" useGeneratedKeys="true" keyProperty="id"
+		parameterType="Teacher">
+		insert into teacher
+		(username,userpwd,name,telphone,idno,sex,native_place,birthday,profession)
+		values
+		(#{username},#{userpwd},#{name},#{telphone},#{idno},#{sex},#{native_place},#{birthday},#{profession});
+	</insert>
+
+	<delete id="deleteTeacher" parameterType="int">
+		delete from teacher
+		where id=${value}
+	</delete>
+
+	<update id="updateTeacher" parameterType="Teacher">
+		update teacher set userpwd=#{userpwd}
+		where
+		username=#{username}
+	</update>
+
+</mapper>

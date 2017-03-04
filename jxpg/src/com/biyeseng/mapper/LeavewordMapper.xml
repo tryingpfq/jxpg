@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biyeseng.mapper.LeavewordMapper">
+	<select id="findAll" parameterType="int" resultType="com.biyeseng.pojo.Leaveword">
+		select * from leaveword 
+		where courseid=${value}
+	</select>
+
+	<select id="findLeaveWordByTimeList" parameterType="java.util.Map"
+		resultType="com.biyeseng.pojo.LeaveWordAdmin">
+		select
+		t.ID,t.COURSENAME,teacher.`NAME`,t.LEAVEWORD,t.LEAVEDATE
+		from (
+		select leaveword.*,course.COURSENAME,course.TEACHERID
+		from leaveword
+		left join course
+		on leaveword.COURSEID=course.ID
+		) as t left join
+		teacher
+		on t.TEACHERID = teacher.ID
+		<where>
+		<if test="createdBegintime!=null and createdBegintime!=''">
+        	t.LEAVEDATE &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="createdEndtime!=null and createdEndtime!=''">
+        	and t.LEAVEDATE &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if> 
+		</where> 
+		limit #{startPos},#{pageSize}
+	</select>
+	
+	<select id="findLeaveWordCount" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from 
+		(
+		select leaveword.*,course.COURSENAME,course.TEACHERID
+		from leaveword
+		left join course
+		on leaveword.COURSEID=course.ID
+		) as t left join
+		teacher
+		on t.TEACHERID = teacher.ID
+		<where>
+		<if test="createdBegintime!=null and createdBegintime!=''">
+        	t.LEAVEDATE &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="createdEndtime!=null and createdEndtime!=''">
+        	and t.LEAVEDATE &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if> 
+		</where> 
+	</select>
+</mapper>

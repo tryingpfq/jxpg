@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biyeseng.mapper.CourseMapper">
+
+    <insert id="addCourse" useGeneratedKeys="true" keyProperty="id" parameterType="com.biyeseng.pojo.Course">
+       insert into course
+       (courseno,coursename,score,remark,teacherid)
+       values(#{courseNo},#{courseName},#{score},#{remark},#{teacherId})
+    </insert>
+     
+    <update id="updateCourse" parameterType="com.biyeseng.pojo.Course">
+       update course set
+       courseno=#{courseNo},coursename=#{courseName},score=#{score},remark=#{remark},teacherid=#{teacherId}
+       where
+       id=#{id}
+    </update>
+	<select id="findAll" resultType="Course">
+		select * from course 
+	</select>
+	
+	<select id="findById" parameterType="java.lang.String" resultType="com.biyeseng.pojo.Course">
+	    select * from course where courseno = #{courseNo}
+	</select>
+	
+	<select id="findCountQuery" parameterType="java.util.Map" resultType="int">
+	    select count(*) from course c 
+	      <where>
+			<if test="courseNo!=null and courseNo!=''">
+			   and c.courseNo LIKE '%${courseNo}%'
+			</if>
+			<if test="courseName!=null and courseName!=''">
+			   and c.courseName LIKE '%${courseName}%'
+			</if>
+			<if test="teacherId!=null and teacherId!=''">
+			   and c.teacherId LIKE '%${teacherId}%'
+			</if>
+	    </where>
+	 
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultType="com.biyeseng.pojo.Course">
+	    select * from course c
+	      <where>
+			<if test="course.courseNo!=null and course.courseNo!=''">
+			   and c.courseNo LIKE '%${course.courseNo}%'
+			</if>
+			<if test="course.courseName!=null and course.courseName!=''">
+			   and c.courseName LIKE '%${course.courseName}%'
+			</if>
+			<if test="course.teacherId!=null and course.teacherId!=''">
+			   and c.teacherId LIKE '%${course.teacherId}%'
+			</if>
+	    </where>
+	    order by score
+	    limit #{startPos},#{pageSize}
+	</select>
+	
+	<select id="findCount" resultType="int">
+	   select count(*) from course
+	</select>
+	
+	<select id="queryPage" parameterType="java.util.Map" resultType="com.biyeseng.pojo.Course">
+	   select * from course order by score limit #{startPos},#{pageSize}
+	</select>
+	<!--  <select id="query" parameterType="java.util.Map" resultType="Course">
+		select * from course u
+		<where>
+			<if test="name!=null and name!=''">
+			   and u.name= #{name}
+			</if>
+			<if test="pwd!=null and pwd!=''">
+			   and u.teacher= #{teacher}
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="queryCourseById" parameterType="int" resultType="Course">
+		select * from course where id=${value}
+	</select>
+	
+	<insert id="insertCourse" useGeneratedKeys="true" keyProperty="id" parameterType="Course">
+		insert into course
+		(name,teacher,period)
+		values
+		(#{name},#{teacher},#{period});
+	</insert>
+	
+	-->
+	
+	<select id="findId" parameterType="int" resultType="com.biyeseng.pojo.Course">
+	   select * from course where id=${value}
+	</select>
+	
+	<delete id="deleteById" parameterType="int">
+	    delete from  course where id=${value}
+	</delete>
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biyeseng.mapper.StudentMapper">
+
+	
+	
+	<select id="findStudentList" 
+		resultType="student">
+		select * from student 
+	</select>
+	
+	<update id="updateStudent" parameterType="Student" >
+		update Student set
+		classid=#{classid},userno=#{userno},userpwd=#{userpwd},name=#{name},telphone=#{telphone},idno=#{idno},sex=#{sex},native_place=#{native_place},birthday=#{birthday}
+		where
+		id=#{id}	
+	</update>
+	
+	
+	
+	<select id="findStudentByid" parameterType="int"
+		resultType="Student">
+		select * from Student where id=${value}
+	</select>
+	
+	
+	
+	
+	<insert id="insertStudent" useGeneratedKeys="true" keyProperty="id" parameterType="Student">
+		insert into student
+		(classid,userno,userpwd,name,telphone,idno,sex,native_place,birthday)
+		values
+		(#{classid},#{userno},#{userpwd},#{name},#{telphone},#{idno},#{sex},#{native_place},#{birthday});
+	</insert>
+	
+	
+	
+	<delete id="deleteStudent" parameterType="int">
+	    delete from  student where id=${value}
+	</delete>
+
+</mapper>
